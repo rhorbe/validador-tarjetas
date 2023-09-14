@@ -4,20 +4,28 @@ const numTarjeta = document.getElementById("mail");
 const feedback = document.getElementById("feedback");
 
 numTarjeta.addEventListener("input", function (event) {
-  if (esValido(numTarjeta)) {
-    limpiarError();
-    if (tarjetaIdentificada(numTarjeta)){}
+  
+  // Cada vez que el usuario escribe algo, verificamos si los campos del formulario son válidos.
+  if (numTarjeta.validity.valid) {
+    cleanError()
+   
+    /* 
+    // En caso de que haya un mensaje de error visible, si el campo
+    // es válido, eliminamos el mensaje de error.
+    feedback.innerHTML = ""; // Restablece el contenido del mensaje
+    feedback.className = "error"; // Restablece el estado visual del mensaje */
   } else {
+    numTarjeta.classList.add("is-invalid");
     showError();
   }
 });
 
-function limpiarError() {
+function cleanError(){
   numTarjeta.classList.remove("is-invalid");
+
 }
 
 function showError() {
-  numTarjeta.classList.add("is-invalid");
   if (numTarjeta.validity.valueMissing) {
     // Si el campo está vacío
     // muestra el mensaje de error siguiente.
