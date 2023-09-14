@@ -33,6 +33,7 @@ form.addEventListener("submit", function (event) {
 
 function showError() {
   if (email.validity.valueMissing) {
+    email.classList.add("is-invalid");
     // Si el campo está vacío
     // muestra el mensaje de error siguiente.
     emailError.textContent =
