@@ -1,48 +1,48 @@
-const form = document.getElementsByTagName("form")[0];
+const NUM_INCOMPLETO = 0;
+const NUM_INVALIDO = 1;
+const NUM_VALIDO = 2;
 
 const numTarjeta = document.getElementById("numTarjeta");
 const feedback = document.getElementById("feedback");
+const btnRetablecer = document.getElementById("btnRetablecer");
 
-numTarjeta.addEventListener("input", function (event) {
+numTarjeta.addEventListener("input", manejadorValidacion);
+btnRetablecer.addEventListener("click", restablecerFormulario);
 
-  // Cada vez que el usuario escribe algo, verificamos si los campos del formulario son válidos.
-  if (numTarjeta.validity.valid) {
-    cleanError()
-   
-    /* 
-    // En caso de que haya un mensaje de error visible, si el campo
-    // es válido, eliminamos el mensaje de error.
-    feedback.innerHTML = ""; // Restablece el contenido del mensaje
-    feedback.className = "error"; // Restablece el estado visual del mensaje */
+function manejadorValidacion(event) {
+  let estadoFormulario = determinarEstado();
+  if (estadoFormulario == NUM_INVALIDO) {
+    mostrarError();
+  } else if (estadoFormulario == NUM_VALIDO) {
+    aceptarTarjeta();
   } else {
-    numTarjeta.classList.add("is-invalid");
-    showError();
+    borrarErrores();
   }
-});
-
-function cleanError(){
-  numTarjeta.classList.remove("is-invalid");
-
+}
+function mostrarError() {
+  borrarErrores();
+  numTarjeta.classList.add("is-invalid");
+  feedback.innerHTML = "S&oacutelo puede ingresar s&oacutelo n&uacutemeros";
 }
 
-function showError() {
-  if (numTarjeta.validity.valueMissing) {
-    // Si el campo está vacío
-    // muestra el mensaje de error siguiente.
-    feedback.textContent =
-      "Debe introducir una dirección de correo electrónico.";
-  } else if (numTarjeta.validity.typeMismatch) {
-    // Si el campo no contiene una dirección de correo electrónico
-    // muestra el mensaje de error siguiente.
-    feedback.textContent =
-      "El valor introducido debe ser una dirección de correo electrónico.";
-  } else if (numTarjeta.validity.tooShort) {
-    // Si los datos son demasiado cortos
-    // muestra el mensaje de error siguiente.
-    feedback.textContent =
-      "El correo electrónico debe tener al menos ${ numTarjeta.minLength } caracteres; ha introducido ${ numTarjeta.value.length }.";
-  }
+function aceptarTarjeta() {
+  borrarErrores();
+  numTarjeta.classList.add("is-valid");
+}
 
-  // Establece el estilo apropiado
-  feedback.className = "error activo";
+function borrarErrores() {
+  numTarjeta.classList.remove("is-invalid");
+  numTarjeta.classList.remove("is-valid");
+}
+
+function restablecerFormulario() {
+  borrarErrores();
+  numTarjeta.focus();
+  numTarjeta.value = "";
+}
+
+function determinarEstado() {
+  if (numTarjeta.value == "" || numTarjeta.value == "o") return NUM_INCOMPLETO;
+  else if (numTarjeta.value == "ok") return NUM_VALIDO;
+  else return NUM_INVALIDO;
 }

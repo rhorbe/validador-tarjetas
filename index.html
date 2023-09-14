@@ -5,44 +5,45 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
   <title>Valicaci&oacute;n de tarjeta</title>
+
   <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="./assets/fontawesome/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+  <link href="./assets/fontawesome/fontawesome/css/brands.css" rel="stylesheet">
+  <link href="./assets/fontawesome/fontawesome/css/solid.css" rel="stylesheet">
+  <link href="./css/styles.css" rel="stylesheet" />
 </head>
 
 <body>
   <div class="bg-info d-flex justify-content-center align-items-center vh-100">
-    <div class="bg-white p-5 rounded-5 text-secondary shadow">
-
+    <div class="bg-white p-5 rounded-5 text-secondary shadow-lg">
 
       <form autocomplete="off" novalidate>
 
         <div class="mb-4">
           <label for="numTarjeta" class="form-label">Ingrese el n&uacute;mero de la tarjeta de cr&eacute;dito</label>
-          <div class="input-group my-3 rounded-5">
+          <div class="input-group my-3 rounded">
 
             <span class="input-group-text" id="basic-addon1">
-              <svg width="16" height="16" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16">
-                <path
-                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z">
-                </path>
-                <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"></path>
-              </svg>
+              <i id="iconoTarjeta" class="fa-solid fa-credit-card fa-lg"></i>
             </span>
 
-            <input type="text" class="form-control" aria-label="Input group example"
-              aria-describedby="basic-addon1" id="numTarjeta" name="numTarjeta">
-            <div class="invalid-feedback"></div>
-            <span class="error" aria-live="polite"></span>
+            <input type="text" class="form-control" aria-label="Input group example" aria-describedby="basic-addon1"
+              id="numTarjeta" name="numTarjeta">
           </div>
+          <div id="feedback" class="invalid-feedback"></div>
+
         </div>
 
-        <button type="submit" class="btn btn-outline-primary">Validar</button>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-outline-primary">Validar</button>
+          <button type="button" id="btnRetablecer" class="btn btn-outline-secondary">Restablecer</button>
+        </div>
 
       </form>
     </div>
   </div>
 
   <script type="text/javascript" src="./bootstrap/js//bootstrap.bundle.min.js"></script>
-
   <script type="text/javascript" src="./scripts/scripts.js"></script>
 </body>
 
