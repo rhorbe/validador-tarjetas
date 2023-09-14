@@ -13,7 +13,7 @@
     <div class="bg-white p-5 rounded-5 text-secondary shadow">
 
 
-      <form novalidate>
+      <form autocomplete="off" novalidate>
 
         <div class="mb-4">
           <label for="mail" class="form-label">Ingrese el n&uacute;mero de la tarjeta de cr&eacute;dito</label>
@@ -28,8 +28,9 @@
               </svg>
             </span>
 
-            <input type="email" class="form-control is-invalid" aria-label="Input group example"
+            <input type="email" class="form-control" aria-label="Input group example"
               aria-describedby="basic-addon1" id="mail" name="mail">
+            <div class="invalid-feedback"></div>
             <span class="error" aria-live="polite"></span>
           </div>
         </div>
