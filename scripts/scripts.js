@@ -1,10 +1,10 @@
 const form = document.getElementsByTagName("form")[0];
 
-const numTarjeta = document.getElementById("mail");
+const numTarjeta = document.getElementById("numTarjeta");
 const feedback = document.getElementById("feedback");
 
 numTarjeta.addEventListener("input", function (event) {
-  
+
   // Cada vez que el usuario escribe algo, verificamos si los campos del formulario son válidos.
   if (numTarjeta.validity.valid) {
     cleanError()
