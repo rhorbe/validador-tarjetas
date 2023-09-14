@@ -1,10 +1,13 @@
 const NUM_INCOMPLETO = 0;
 const NUM_INVALIDO = 1;
 const NUM_VALIDO = 2;
+const ICONO_TARJETA_DESCONOCIDA = "fa-solid fa-credit-card fa-lg";
+const ICONO_VISA = "fa-brands fa-cc-visa fa-lg";
 
 const numTarjeta = document.getElementById("numTarjeta");
 const feedback = document.getElementById("feedback");
 const btnRetablecer = document.getElementById("btnRetablecer");
+const iconoTarjeta = document.getElementById("iconoTarjeta");
 
 numTarjeta.addEventListener("input", manejadorValidacion);
 btnRetablecer.addEventListener("click", restablecerFormulario);
@@ -28,6 +31,7 @@ function mostrarError() {
 function aceptarTarjeta() {
   borrarErrores();
   numTarjeta.classList.add("is-valid");
+  iconoTarjeta.className = ICONO_VISA;
 }
 
 function borrarErrores() {
@@ -39,6 +43,7 @@ function restablecerFormulario() {
   borrarErrores();
   numTarjeta.focus();
   numTarjeta.value = "";
+  iconoTarjeta.className = ICONO_TARJETA_DESCONOCIDA;
 }
 
 function determinarEstado() {
