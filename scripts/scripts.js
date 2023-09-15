@@ -1,53 +1,90 @@
-const NUM_INCOMPLETO = 0;
-const NUM_INVALIDO = 1;
-const NUM_VALIDO = 2;
-const ICONO_TARJETA_DESCONOCIDA = "fa-solid fa-credit-card fa-lg";
-const ICONO_VISA = "fa-brands fa-cc-visa fa-lg";
+const TARJETA_INVALIDA = 0;
+const TARJETA_NO_RECONOCIDA = 1;
+const TARJETA_VISA = 2;
 
 const numTarjeta = document.getElementById("numTarjeta");
 const feedback = document.getElementById("feedback");
 const btnRetablecer = document.getElementById("btnRetablecer");
-const iconoTarjeta = document.getElementById("iconoTarjeta");
+const iconoTarjetaDesconocida = document.getElementById(
+  "iconoTarjetaDesconocida"
+);
+const iconoTarjetaVisa = document.getElementById("iconoVisa");
 
 numTarjeta.addEventListener("input", manejadorValidacion);
 btnRetablecer.addEventListener("click", restablecerFormulario);
 
+
 function manejadorValidacion(event) {
-  let estadoFormulario = determinarEstado();
-  if (estadoFormulario == NUM_INVALIDO) {
-    mostrarError();
-  } else if (estadoFormulario == NUM_VALIDO) {
-    aceptarTarjeta();
-  } else {
-    borrarErrores();
-  }
+  let tarjetaDetectada = detectarTarjeta();
+
+  if (tarjetaDetectada == TARJETA_NO_RECONOCIDA) limpiarErrores();
+  else if (tarjetaDetectada == TARJETA_INVALIDA) mostrarError();
+  else aceptarTarjeta(tarjetaDetectada);
 }
+
+
 function mostrarError() {
-  borrarErrores();
+  limpiarErrores();
   numTarjeta.classList.add("is-invalid");
   feedback.innerHTML = "S&oacutelo puede ingresar s&oacutelo n&uacutemeros";
 }
 
-function aceptarTarjeta() {
-  borrarErrores();
+
+function aceptarTarjeta(tarjetaDetectada) {
+  limpiarErrores();
   numTarjeta.classList.add("is-valid");
-  iconoTarjeta.className = ICONO_VISA;
+  ocultarIconosTarjetas();
+  mostrarIconoTarjetaDetectada(tarjetaDetectada);
 }
 
-function borrarErrores() {
+
+function mostrarIconoTarjetaDetectada(tarjetaDetectada) {
+  switch (tarjetaDetectada) {
+    case TARJETA_VISA:
+      iconoTarjetaVisa.classList.remove("d-none");
+      break;
+
+    default:
+      restablecerIconosTarjetas();
+      break;
+  }
+}
+
+
+function ocultarIconosTarjetas() {
+  iconoTarjetaDesconocida.classList.add("d-none");
+  iconoTarjetaVisa.classList.add("d-none");
+}
+
+
+function limpiarErrores() {
   numTarjeta.classList.remove("is-invalid");
   numTarjeta.classList.remove("is-valid");
 }
 
+
 function restablecerFormulario() {
-  borrarErrores();
+  limpiarErrores();
+  restablecerIconosTarjetas();
   numTarjeta.focus();
   numTarjeta.value = "";
-  iconoTarjeta.className = ICONO_TARJETA_DESCONOCIDA;
 }
 
-function determinarEstado() {
-  if (numTarjeta.value == "" || numTarjeta.value == "o") return NUM_INCOMPLETO;
-  else if (numTarjeta.value == "ok") return NUM_VALIDO;
-  else return NUM_INVALIDO;
+
+function restablecerIconosTarjetas() {
+  ocultarIconosTarjetas();
+  iconoTarjetaDesconocida.classList.remove("d-none");
+}
+
+
+function detectarTarjeta() {
+  if (
+    numTarjeta.value == "" ||
+    numTarjeta.value == "v" ||
+    numTarjeta.value == "vi" ||
+    numTarjeta.value == "vis"
+  )
+    return TARJETA_NO_RECONOCIDA;
+  else if (numTarjeta.value == "visa") return TARJETA_VISA;
+  else return TARJETA_INVALIDA;
 }
