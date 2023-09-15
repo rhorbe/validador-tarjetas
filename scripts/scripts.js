@@ -54,6 +54,7 @@ function mostrarIconoTarjetaDetectada(tarjetaDetectada) {
 function ocultarIconosTarjetas() {
   iconoTarjetaDesconocida.classList.add("d-none");
   iconoVisa.classList.add("d-none");
+  iconoDiners.classList.add("d-none");
 }
 
 function limpiarErrores() {
@@ -69,7 +70,6 @@ function restablecerFormulario() {
 }
 
 function restablecerIconosTarjetas() {
-  alert("restablecer iconos");
   ocultarIconosTarjetas();
   iconoTarjetaDesconocida.classList.remove("d-none");
 }
