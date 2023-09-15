@@ -5,3 +5,12 @@
 .d-flex {
   gap: 10px;
 }
+
+.btn-circle.btn-xl {
+  width: 80px;
+  height: 80px;
+  padding: 13px 18px;
+  border-radius: 60px;
+  font-size: 15px;
+  text-align: center;
+}
