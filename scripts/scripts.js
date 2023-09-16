@@ -12,14 +12,15 @@ const iconoTarjetaDesconocida = document.getElementById(
 const iconoVisa = document.getElementById("iconoVisa");
 const iconoDiners = document.getElementById("iconoDiners");
 
-numTarjeta.addEventListener("input", manejadorValidacion);
+numTarjeta.addEventListener("keyup", manejadorValidacion);
 btnRetablecer.addEventListener("click", restablecerFormulario);
 
 function manejadorValidacion(event) {
   let tarjetaDetectada = detectarTarjeta();
-
-  if (tarjetaDetectada == TARJETA_NO_RECONOCIDA) limpiarErrores();
-  else if (tarjetaDetectada == TARJETA_INVALIDA) mostrarError();
+  if (tarjetaDetectada == TARJETA_NO_RECONOCIDA) {
+    limpiarErrores();
+    mostrarIconoTarjetaDetectada(tarjetaDetectada);
+  } else if (tarjetaDetectada == TARJETA_INVALIDA) mostrarError();
   else aceptarTarjeta(tarjetaDetectada);
 }
 
