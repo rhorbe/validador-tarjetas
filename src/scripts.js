@@ -1,11 +1,10 @@
 /* Expresiones regulares */
 const regExEnteroPositivo = new RegExp("^(\\d+)$");
-const regExVisa = "^4\\d{3}(| |-)(?:\\d{4}\\1){2}\\d{4}$";
+const regExVisa = "^4[0-9]{12}(?:[0-9]{3})?$";
 const regExDiners = "^3(?:0[0-5]|[68][0-9])[0-9]{11}$";
-const regExMaster =
-  "^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$";
+const regExMaster = "^5[1-5][0-9]{14}$";
 const rexExAmerican = "^3[47][0-9]{13}$";
-const rexExDiscover = "^6(?:011|5\\d\\d)(| |-)(?:\\d{4}\\1){2}\\d{4}$";
+const rexExDiscover = "^6(?:011|5[0-9]{2})[0-9]{12}$";
 
 const expresionRegular = new RegExp(
   `((?<VISA>${regExVisa})|(?<DINERS>${regExDiners})|(?<MASTER>${regExMaster})|(?<AMERICAN>${rexExAmerican})|(?<AMAZON_PAY>${rexExDiscover}))`,
@@ -76,14 +75,14 @@ function mostrarFeedback(mensaje, esValido) {
   esValido ? feedBackValido() : feedbackInvalido();
 }
 
-function feedBackValido(){
-  feedback.classList.add("valid-feedback")
-  feedback.classList.remove("invalid-feedback")
+function feedBackValido() {
+  feedback.classList.add("valid-feedback");
+  feedback.classList.remove("invalid-feedback");
 }
 
-function feedbackInvalido() {  
-  feedback.classList.remove("valid-feedback")
-  feedback.classList.add("invalid-feedback")  
+function feedbackInvalido() {
+  feedback.classList.remove("valid-feedback");
+  feedback.classList.add("invalid-feedback");
 }
 
 function limpiarFeedBack() {
