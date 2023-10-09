@@ -1,3 +1,16 @@
+/* Expresiones regulares */
+const regExEnteroPositivo = new RegExp("^(\\d+)$");
+const regExVisa = "^4\\d{3}(| |-)(?:\\d{4}\\1){2}\\d{4}$";
+const regExDiners = "^3(?:0[0-5]|[68][0-9])[0-9]{11}$";
+const regExMaster = "^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$";
+const rexExAmerican = "^3[47][0-9]{13}$";
+const rexExDiscover = "^6(?:011|5\\d\\d)(| |-)(?:\\d{4}\\1){2}\\d{4}$";
+
+const expresionRegular = new RegExp(
+  `((?<VISA>${regExVisa})|(?<DINERS>${regExDiners})|(?<MASTER>${regExMaster})|(?<AMERICAN>${rexExAmerican})|(?<AMAZON_PAY>${rexExDiscover}))`,
+  "g"
+);
+
 /* Constantes */
 const TARJETA_NO_RECONOCIDA = 0;
 const TARJETA_VISA = 1;
@@ -26,7 +39,7 @@ btnRetablecer.addEventListener("click", restablecerFormulario);
 function validarTarjeta() {
   let numTarjeta = inputNumTarjeta.value;
   restablecerIconosTarjetas();
-  if (esEnteroPositivo(numTarjeta)) {
+  if (esEnteroPositivo(numTarjeta) && numTarjeta.length <= 20) {
     limpiarError();
     let tarjetaIdentificada = identificarTarjeta(numTarjeta);
     if (tarjetaIdentificada) {
@@ -106,18 +119,7 @@ function ocultarIconosTarjetas() {
   iconoAmerican.classList.add("d-none");
   iconoDiscover.classList.add("d-none");
 }
-const regExEnteroPositivo = new RegExp("^(\\d+)$");
 
-const regExVisa = "^4\\d{3}(| |-)(?:\\d{4}\\1){2}\\d{4}$";
-const regExDiners = "^3(?:0[0-5]|[68][0-9])[0-9]{11}$";
-const regExMaster = "^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$";
-const rexExAmerican = "^3[47][0-9]{13}$";
-const rexExDiscover = "^6(?:011|5\\d\\d)(| |-)(?:\\d{4}\\1){2}\\d{4}$";
-
-const expresionRegular = new RegExp(
-  `((?<VISA>${regExVisa})|(?<DINERS>${regExDiners})|(?<MASTER>${regExMaster})|(?<AMERICAN>${rexExAmerican})|(?<AMAZON_PAY>${rexExDiscover}))`,
-  "g"
-);
 
 function esEnteroPositivo(numTarjeta) {
   if (numTarjeta) {
