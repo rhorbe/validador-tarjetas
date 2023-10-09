@@ -7,7 +7,7 @@ const rexExAmerican = "^3[47][0-9]{13}$";
 const rexExDiscover = "^6(?:011|5[0-9]{2})[0-9]{12}$";
 
 const expresionRegular = new RegExp(
-  `((?<VISA>${regExVisa})|(?<DINERS>${regExDiners})|(?<MASTER>${regExMaster})|(?<AMERICAN>${rexExAmerican})|(?<AMAZON_PAY>${rexExDiscover}))`,
+  `((?<VISA>${regExVisa})|(?<DINERS>${regExDiners})|(?<MASTER>${regExMaster})|(?<AMERICAN>${rexExAmerican})|(?<DISCOVERY>${rexExDiscover}))`,
   "g"
 );
 
@@ -42,12 +42,13 @@ function validarTarjeta() {
   restablecerIconosTarjetas();
 
   if (!esEnteroPositivo(numTarjeta)) {
-    mostrarError("S&oacutelo puede ingresar s&oacutelo d&iacutegitos");
+    mostrarError("Puede ingresar solamente d&iacutegitos");
   } else if (numTarjeta.length > 20) {
     mostrarError("Ha ingresado demasiados d&iacutegitos");
   } else {
     limpiarError();
     let tarjetaIdentificada = identificarTarjeta(numTarjeta);
+
     if (tarjetaIdentificada) {
       aceptarTarjeta(tarjetaIdentificada);
     }
@@ -55,7 +56,6 @@ function validarTarjeta() {
 }
 
 function aceptarTarjeta(tarjetaDetectada) {
-  limpiarError();
   numTarjeta.classList.add("is-valid");
   ocultarIconosTarjetas();
   mostrarIconoTarjetaDetectada(tarjetaDetectada);
@@ -156,8 +156,8 @@ function esEnteroPositivo(numTarjeta) {
 }
 
 function identificarTarjeta(numTarjeta) {
-  const match = expresionRegular.exec(numTarjeta);
-  let tarjetaIdentificada;
+  let match = expresionRegular.exec(numTarjeta);
+  let tarjetaIdentificada = "";
   if (match) {
     for (let grupo in match.groups) {
       if (match.groups[grupo]) {
@@ -165,6 +165,7 @@ function identificarTarjeta(numTarjeta) {
       }
     }
   }
+  match = expresionRegular.exec(""); //Solución para un bug por el cual el RegEx.exec no funciona 2 veces seguidas
   return tarjetaIdentificada;
 }
 
@@ -178,7 +179,7 @@ function pasarNombreGrupoAConstante(grupo) {
       return TARJETA_MASTER;
     case "AMERICAN":
       return TARJETA_AMERICAN;
-    case "AMAZON_PAY":
+    case "DISCOVERY":
       return TARJETA_DISCOVER;
     default:
       return TARJETA_DESCONOCIDA;
