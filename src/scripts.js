@@ -2,7 +2,8 @@
 const regExEnteroPositivo = new RegExp("^(\\d+)$");
 const regExVisa = "^4\\d{3}(| |-)(?:\\d{4}\\1){2}\\d{4}$";
 const regExDiners = "^3(?:0[0-5]|[68][0-9])[0-9]{11}$";
-const regExMaster = "^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$";
+const regExMaster =
+  "^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$";
 const rexExAmerican = "^3[47][0-9]{13}$";
 const rexExDiscover = "^6(?:011|5\\d\\d)(| |-)(?:\\d{4}\\1){2}\\d{4}$";
 
@@ -33,20 +34,24 @@ const iconoAmerican = document.getElementById("iconoAmerican");
 const iconoDiscover = document.getElementById("iconoDiscover");
 
 /* Eventos */
-inputNumTarjeta.addEventListener("keyup", validarTarjeta);
+inputNumTarjeta.addEventListener("input", validarTarjeta);
 btnRetablecer.addEventListener("click", restablecerFormulario);
 
 function validarTarjeta() {
   let numTarjeta = inputNumTarjeta.value;
+
   restablecerIconosTarjetas();
-  if (esEnteroPositivo(numTarjeta) && numTarjeta.length <= 20) {
+
+  if (!esEnteroPositivo(numTarjeta)) {
+    mostrarError("S&oacutelo puede ingresar s&oacutelo d&iacutegitos");
+  } else if (numTarjeta.length > 20) {
+    mostrarError("Ha ingresado demasiados d&iacutegitos");
+  } else {
     limpiarError();
     let tarjetaIdentificada = identificarTarjeta(numTarjeta);
     if (tarjetaIdentificada) {
       aceptarTarjeta(tarjetaIdentificada);
     }
-  } else {    
-    mostrarError();
   }
 }
 
@@ -55,12 +60,36 @@ function aceptarTarjeta(tarjetaDetectada) {
   numTarjeta.classList.add("is-valid");
   ocultarIconosTarjetas();
   mostrarIconoTarjetaDetectada(tarjetaDetectada);
+  mostrarFeedback("Tarjeta aceptada", true);
 }
 
-function mostrarError() {
+function mostrarError(mensaje) {
   limpiarError();
   numTarjeta.classList.add("is-invalid");
-  feedback.innerHTML = "S&oacutelo puede ingresar s&oacutelo n&uacutemeros";
+  mostrarFeedback(mensaje, false);
+}
+
+function mostrarFeedback(mensaje, esValido) {
+  feedback.innerHTML = mensaje;
+  feedback.classList.remove("d-none");
+  feedback.classList.add("d-block");
+  esValido ? feedBackValido() : feedbackInvalido();
+}
+
+function feedBackValido(){
+  feedback.classList.add("valid-feedback")
+  feedback.classList.remove("invalid-feedback")
+}
+
+function feedbackInvalido() {  
+  feedback.classList.remove("valid-feedback")
+  feedback.classList.add("invalid-feedback")  
+}
+
+function limpiarFeedBack() {
+  feedback.innerHTML = "";
+  feedback.classList.remove("d-block");
+  feedback.classList.add("d-none");
 }
 
 function restablecerFormulario() {
@@ -73,6 +102,7 @@ function restablecerFormulario() {
 function limpiarError() {
   numTarjeta.classList.remove("is-invalid");
   numTarjeta.classList.remove("is-valid");
+  limpiarFeedBack();
 }
 
 function restablecerFormulario() {
@@ -119,7 +149,6 @@ function ocultarIconosTarjetas() {
   iconoAmerican.classList.add("d-none");
   iconoDiscover.classList.add("d-none");
 }
-
 
 function esEnteroPositivo(numTarjeta) {
   if (numTarjeta) {
