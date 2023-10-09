@@ -1,7 +1,7 @@
 /* Expresiones regulares */
 const regExEnteroPositivo = new RegExp("^(\\d+)$");
 const regExVisa = "^4[0-9]{12}(?:[0-9]{3})?$";
-const regExDiners = "^3(?:0[0-5]|[68][0-9])[0-9]{11}$";
+const regExDiners = "^3(?:0[0-5]|[68][0-9])[0-9]{11}(?:[0-9]{2})?$";
 const regExMaster = "^5[1-5][0-9]{14}$";
 const rexExAmerican = "^3[47][0-9]{13}$";
 const rexExDiscover = "^6(?:011|5[0-9]{2})[0-9]{12}$";
